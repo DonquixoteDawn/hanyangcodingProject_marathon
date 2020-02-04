@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>책 목록</title>
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename = 'css/style.css')}}">
+</head>
+<body>
+    <div class="title">
+    <h1>독서마라톤</h1>
+    </div>
+    <div style="width:100px; float:left;">
+        <ul>
+            <li><a href="/run"> 나의 현황 </a></li>
+            <br>
+            <li>책 목록</li>
+            <p></p>
+        </ul>
+    </div>
+    <div class="content" style="float:left">
+<input type="text" name="책이름 " id="bookname">
+<button id="search">검색</button>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+ <script type="text/javascript">
+ 	$(document).ready(function () {
+
+		$("#search").click(function () {
+		 	$.ajax({
+			  method: "GET",
+			  url: "https://dapi.kakao.com/v3/search/book?target=title",
+			  data: { query : $("#bookname").val() },
+			  headers: {Authorization: "KakaoAK 520ae1c6e65b6bcf8cf53b6e7ecd6297"}
+			})
+			  .done(function( msg ) {
+
+			    console.log( msg.documents[0].thumbnail);
+
+			    $( "p" ).append( "<img src='"+msg.documents[0].thumbnail+"'/>" );
+
+			  });
+		  });
+	});
+ </script>
+ </script>
+
+
+    </div>
+
+</body>
+</html>
